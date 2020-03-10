@@ -20,7 +20,7 @@ app.post("/", function(req, res) {
 
     //build up the URL for the JSON query, API Key is // secret and needs to be obtained by signup
         const units = "imperial";
-        const apiKey = "67f6b382921c1e89b39b20d4f9556f22";
+        const apiKey = "d31c88f79c5516e11f6d03e4ca576a8e";
         const url = "https://api.openweathermap.org/data/2.5/weather?q=" + cityname + "&units=" + units + "&APPID=" + apiKey;
 
     // this gets the data from Open WeatherPI
@@ -36,6 +36,10 @@ app.post("/", function(req, res) {
             const windSpeed = weatherData.wind.speed;
             const weatherDescription = weatherData.weather[0].description;
             const icon = weatherData.weather[0].icon;
+            const latitude = coordData.coord.lon;
+            const longitude = coordData.coord.lat;
+            const wind = windData.wind.speed;
+            const direction = windData.wind.deg;
             const imageURL = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
 
             // displays the output of the results
@@ -43,6 +47,10 @@ app.post("/", function(req, res) {
             res.write("<h2>The Temperature in " + city + " is " + temp + " Degrees Fahrenheit<h2>");
             res.write("Humidity is " + humidity + "% with wind speed of " + windSpeed+  " miles/hour");
             res.write("<img src=" + imageURL +">");
+            res.write("Latitude is" latitude);
+            res.write("Longitude is" longitude);
+            res.write("Wind speed is" wind);
+            res.write("Wind direction is" direction);
             res.send();
         });
     });
