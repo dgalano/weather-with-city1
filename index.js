@@ -13,20 +13,20 @@ app.get("/", function(req, res) {
 
 //invoked after hitting go in the html form
 app.post("/", function(req, res) {
-    
+
     // takes in the city from the html form, display in // console. Takes in as string.
         var cityname = String(req.body.cityInput);
         console.log(req.body.cityInput);
-    
-    //build up the URL for the JSON query, API Key is // secret and needs to be obtained by signup 
+
+    //build up the URL for the JSON query, API Key is // secret and needs to be obtained by signup
         const units = "imperial";
         const apiKey = "67f6b382921c1e89b39b20d4f9556f22";
         const url = "https://api.openweathermap.org/data/2.5/weather?q=" + cityname + "&units=" + units + "&APPID=" + apiKey;
-    
+
     // this gets the data from Open WeatherPI
     https.get(url, function(response){
         console.log(response.statusCode);
-        
+
         // gets individual items from Open Weather API
         response.on("data", function(data){
             const weatherData = JSON.parse(data);
@@ -34,10 +34,10 @@ app.post("/", function(req, res) {
             const city = weatherData.name;
             const humidity = weatherData.main.humidity;
             const windSpeed = weatherData.wind.speed;
-            const weatherDescription = weatherData.weather[0].description; 
+            const weatherDescription = weatherData.weather[0].description;
             const icon = weatherData.weather[0].icon;
-            const imageURL = "http://openweathermap.org/img/wn/" + icon + "@2x.png"; 
-            
+            const imageURL = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+
             // displays the output of the results
             res.write("<h1> The weather is " + weatherDescription + "<h1>");
             res.write("<h2>The Temperature in " + city + " is " + temp + " Degrees Fahrenheit<h2>");
@@ -54,3 +54,5 @@ app.post("/", function(req, res) {
 app.listen(process.env.PORT || 3000, function() {
 console.log ("Server is running on port")
 });
+
+// Why is this not working???
